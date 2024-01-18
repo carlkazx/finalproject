@@ -13,28 +13,31 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/overtime")
+@CrossOrigin(origins = "http://localhost:5137")
 public class OvertimeRequestController {
 
     @Autowired
     private OvertimeRequestService overtimeRequestService;
-    private static final Logger log = LoggerFactory.getLogger(OvertimeRequestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(OvertimeRequestController.class);
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public ResponseEntity<List<OvertimeRequest>> listOvertimeRequests() {
+        logger.info("Overtime List");
         return ResponseEntity.ok(overtimeRequestService.getAllOvertimeRequests());
     }
 
-    @PostMapping
+    @PostMapping("/overtime-request")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<OvertimeRequest> createOvertimeRequest(@RequestBody OvertimeRequest overtimeRequest) {
+        logger.info("Overtime Requested");
         return ResponseEntity.ok(overtimeRequestService.saveOvertimeRequest(overtimeRequest));
     }
 
     @PostMapping("/approve/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> approveOvertimeRequest(@PathVariable Long id) {
-        log.info("Approving overtime request with ID: " + id);
+        logger.info("Approving overtime request with ID: " + id);
         overtimeRequestService.approveOvertimeRequest(id);
         return ResponseEntity.ok().build();
     }

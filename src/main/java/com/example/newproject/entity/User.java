@@ -1,5 +1,6 @@
 package com.example.newproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Table(name = "users")
 @Entity
@@ -136,6 +141,19 @@ public class User implements UserDetails {
         this.role = role;
         return this;
     }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "assignedTo")
+    private Set<Task> tasks;
+
 
     @Override
     public String toString() {
