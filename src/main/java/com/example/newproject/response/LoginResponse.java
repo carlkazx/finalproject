@@ -29,6 +29,6 @@ public class LoginResponse {
         return "LoginResponse{" +
                 "token='" + token + '\'' +
                 ", expiresIn=" + expiresIn +
-                '}';
+                '}' + "email" + "role";
     }
 }
