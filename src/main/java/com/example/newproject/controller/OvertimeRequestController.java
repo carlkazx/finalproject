@@ -38,9 +38,18 @@ public class OvertimeRequestController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> approveOvertimeRequest(@PathVariable Long id) {
         logger.info("Approving overtime request with ID: " + id);
-        overtimeRequestService.approveOvertimeRequest(id);
+        OvertimeRequest overtimeRequest = overtimeRequestService.getOvertimeRequestById(id);
+
+        if (overtimeRequest == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        overtimeRequest.setApprovalStatus("approved"); // Update the approval status
+        overtimeRequestService.saveOvertimeRequest(overtimeRequest); // Save the updated request
+
         return ResponseEntity.ok().build();
     }
+
 
 
     // Additional methods...

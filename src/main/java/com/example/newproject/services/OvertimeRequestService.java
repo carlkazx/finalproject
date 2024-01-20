@@ -46,5 +46,9 @@ public class OvertimeRequestService {
         }
     }
 
+    public OvertimeRequest getOvertimeRequestById(Long id) {
+        return overtimeRequestRepository.findById(id).orElse(null);
+    }
+
     // Additional methods like update, delete, findByUserId, etc.
 }

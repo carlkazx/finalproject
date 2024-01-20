@@ -1,11 +1,13 @@
 package com.example.newproject.controller;
 
+import com.example.newproject.entity.Role;
 import com.example.newproject.entity.User;
 import com.example.newproject.dtos.LoginUserDto;
 import com.example.newproject.dtos.RegisterUserDto;
 import com.example.newproject.response.LoginResponse;
 import com.example.newproject.services.AuthenticationService;
 import com.example.newproject.services.JwtService;
+import io.jsonwebtoken.Claims;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -34,19 +36,33 @@ public class AuthenticationController {
         return ResponseEntity.ok(registeredUser);
     }
 
+
+    // ... imports and class definition
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         try {
             User authenticatedUser = authenticationService.authenticate(loginUserDto);
             String jwtToken = jwtService.generateToken(authenticatedUser);
 
+            Claims claims = jwtService.decodeToken(jwtToken);
+            logger.info("Decoded JWT: {}", claims);
+
             // Log the generated token
             logger.info("Generated Token: " + jwtToken);
 
-            LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
+            // Convert the RoleEnum to String using the getter and name() method
+            String roleName = authenticatedUser.getRole().getName().name(); // Use the enum's name() method
+            // Inside your authenticate method
+            logger.info("User role is: {}", roleName); // This should log the user's role
+            LoginResponse loginResponse = new LoginResponse()
+                    .setToken(jwtToken)
+                    .setExpiresIn(jwtService.getExpirationTime())
+                    .setRole(roleName); // Set the role name as a string
 
             // Log successful login
-            logger.info("User '{}' successfully logged in", authenticatedUser.getRole());
+            logger.info("User '{}' with role '{}' successfully logged in",
+                    authenticatedUser.getUsername(), roleName);
 
             return ResponseEntity.ok(loginResponse);
         } catch (AuthenticationException e) {
@@ -57,4 +73,6 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+
 }

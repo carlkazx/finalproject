@@ -41,5 +41,10 @@ public class OvertimeRequest {
 
     private boolean isApproved = false;
 
+    @Getter
+    @Setter
+    private String approvalStatus = "pending"; // Default to "pending"
+
+
     // Constructors, Getters, Setters
 }

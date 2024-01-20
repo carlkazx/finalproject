@@ -22,6 +22,8 @@ public class LoginUserDto {
         return this;
     }
 
+    private String role;
+
     @Override
     public String toString() {
         return "LoginUserDto{" +

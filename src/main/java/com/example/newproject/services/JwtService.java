@@ -53,6 +53,14 @@ public class JwtService {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
+    public Claims decodeToken(String token) {
+        return Jwts.parser()
+                .setSigningKey("3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b") // Key as a string
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+
     public long getExpirationTime() {
         return jwtExpiration;
     }
