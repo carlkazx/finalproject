@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "phrasal-hold-390302",
+  "private_key_id": "48006118f6c84aafc7851d5c1c80f602894a8074",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzYL6F1fwZeVVF\noRMcATkviv5aZWP3nNrrS79qNVESKmor5u6C8Gi1v4NnI4RloMMTqOa36eil6hJn\nDKXvIRIMHpRulcPLnJ2TiKWPOs1Mz3ENpAR++wARsXRJBbolWFhL9zqfS4GUrxRx\nEmdbCXalyQQ+9Hgv/DtNrGh5/lqXO7wktIP1esE1Dl5tXtSe4knMT7inOhh+W4VR\nCY4jR6ygXddufBPdV26B/mtX2itn24WpT8sdcCLpJCgwa1klLuOXqW+WUhtBDndw\n3E+KVZfRUahuN7oGAPMQgudEAc/G6sr6R0fB0ngfHaOMd5LwUE4HW2I+y1ihjdoO\ng4bX955JAgMBAAECggEAFvjXzXoHDBge1Ij5UofRlAYf5uG/OLHM039i5y4m0MW/\nzRmJCBnTvxrksCu7Q+yfrv/ddEYvdjgQ3UOgaIx6rDSqW7MwXP4UrBU+5qXoLuMO\nHmoX7U8lxh5MvyFNooS64heqWUYpNSpq2sQ5mk4O9NJWid1zGuoZiiv/QUhSv7U+\nmCzoZVohnpZ0MEom+F89BoQP8/rx6tgGwO/GXIqJ+dRzQ3L3sGrwj8WNh45Bj4G6\nk5a/iBvGKBIab0gSJhIt8ZSqhms5bmWDWDAWfHgj0mQVawDyS1ses2/ZU1O36ROs\nIsrEnVAvZFVhdoJjx+spIrKcIL4Cie5dBExwU8sUpQKBgQDqzYgNOVL71j6GKNLR\n7Pf3rcxrpr2LeSiXRj8+a8h2Egw1dlwv7BXHiRrERH/yaqtfWGwcxBMyW1+YAekR\niaZwOsPpbyW277R4fHNkUdSbNyiXb3npVGiI0sAjQijPQJvyQBlXAvUn1k6bybe2\nk/340j6fnRRLF+V12UiFiVZDowKBgQDDkk0Nd0wRmjoO52pEj/28+UxaZAwAx8U6\nU+rBigWl/2AWbW08/s98P47ZVsR8lnr3syfZNU0CflN6c+pG7qPPZL9VMgJVsEY1\nUVXGFVD/snkbwm29SRWPtfNsR3tDa8D6JJJuSacm2O+NHfv4eUT4s04lz+u4eHU2\nGY035eAVIwKBgCHg5fCChOaxUvQoj8KaXmzuNsCRnmexY5nwGM/43UOr9vb/zO1d\nMwdHUQVgnNVtbqyjJXZBFEP/yxszq11MbydiU0IrN1Xd4DxCOKQQ6ow6uTCgdQal\nly+muPJdaWX9/IJHnWBgnN7SnST9RfSiBdMRAtgk4fizyffnEf+ygS/hAoGBAJdp\nhlQ9n1wlbnupeKG6ZTVQQWfd+1kDUVQWMjNDG5pn+8mBUMifcp38SylDPv5CNtPd\nFaXZ2VRr3093vNLL4XEoy+U2wY372m9fGCwyxrIgSBlQz0tz8MiBkwOq1+jb3N0N\nQX03crzlyZkUtMarhNWTZJZrwlDgmcaXw7iaNYHHAoGAAdALDeyj8AkXcH2gbGM0\nXJmggDn1wAFe8QqHP+oyA1qfrDrm3kKO3fyOMi70KrUQ6NHo06ZH4O8LPqjl4vdN\n1uSMnIyt7rTlG76Jjso19rAooF296/ZVT+BejumunHfFSgjjVMSpnnfhE0GliIj+\nbgTVcVbMNYJAMF1sZGgVeRA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "task-management@phrasal-hold-390302.iam.gserviceaccount.com",
+  "client_id": "103182543499525082723",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/task-management%40phrasal-hold-390302.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -74,6 +76,22 @@ public class TaskService {
     }
 
     @Transactional
+    public Task createTaskFromGoogleSheet(String ticketId, String name, String staffId, String details) {
+        Task task = new Task();
+        task.setTicketId(ticketId);
+        task.setName(name); // Assuming you have a 'name' field in your Task entity
+        task.setStaffId(staffId); // Assuming you have a 'staffId' field in your Task entity
+        task.setDetails(details); // Assuming you have a 'details' field in your Task entity
+        // Set other default values or handle them accordingly
+
+        return taskRepository.save(task);
+    }
+
+    public boolean existsByTicketId(String ticketId) {
+        return taskRepository.existsByTicketId(ticketId);
+    }
+
+    @Transactional
     public Task createAndAssignTask(Task task, Integer userId) {
         User assignedUser = userRepository.findById(userId).orElse(null);
         if (assignedUser == null) {
@@ -98,8 +116,4 @@ public class TaskService {
             logger.warn("Task cannot be reverted. Task ID: {}", id);
         }
     }
-
-
-
-    // Additional methods...
 }

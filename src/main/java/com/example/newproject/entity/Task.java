@@ -1,52 +1,36 @@
 package com.example.newproject.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
 public class Task {
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public String getDescription() {
-        return description;
-    }
+    @Setter
+    @Getter
+    private String ticketId; // New field for TICKETID from Google Sheets
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
+    @Setter
+    @Getter
     private String description;
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
-
+    @Setter
+    @Getter
     private LocalDateTime dueDate;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    @Setter
+    @Getter
     private String title;
 
     public boolean isCompleted() {
@@ -69,16 +53,18 @@ public class Task {
 
     private boolean isApproved = false;
 
+    @Setter @Getter
+    private String name; // Corresponds to the 'Name' column in Google Sheets
+
+    @Setter @Getter
+    private String staffId; // Corresponds to the 'Staff ID' column in Google Sheets
+
+    @Setter @Getter
+    private String details; // Corresponds to the 'Details' column in Google Sheets
 
 
-    public User getAssignedTo() {
-        return assignedTo;
-    }
-
-    public void setAssignedTo(User assignedTo) {
-        this.assignedTo = assignedTo;
-    }
-
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_user_id")
     private User assignedTo;
