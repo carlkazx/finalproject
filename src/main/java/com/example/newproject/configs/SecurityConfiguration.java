@@ -41,10 +41,14 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/overtime/approve/*",
                                 "/api/tasks/approve/*",
                                 "/api/tasks/assign",
-                                "/api/tasks/revert/*").hasRole("ADMIN") // Only ADMIN can access these
+                                "/api/tasks/revert/*",
+                                "api/tasks/").hasRole("ADMIN") // Only ADMIN can access these
                         .requestMatchers(HttpMethod.POST, "/admins").hasRole("SUPER_ADMIN") // Only SUPER_ADMIN can access this
                         .requestMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN", "SUPER_ADMIN") // Both ADMIN and SUPER_ADMIN can access this
-                        .requestMatchers(HttpMethod.POST, "/api/overtime/overtime-request").hasRole("USER") // Only USER can access this
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/overtime/overtime-request",
+                                "/api/tasks/requestApproval/",
+                                "/api/tasks/complete/").hasRole("USER") // Only USER can access this
                         .requestMatchers("/api/**").permitAll() // All other /api endpoints are public
                         .anyRequest().authenticated() // All other requests need to be authenticated
                 )
