@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
+@CrossOrigin
 public class TaskController {
 
     @Autowired
@@ -29,10 +30,14 @@ public class TaskController {
 
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Task>> getAllTasks() {
-        return ResponseEntity.ok(taskService.getAllTasks());
+        logger.info("Getting all tasks");
+        List<Task> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok(tasks);
     }
 
+    
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         logger.info("Creating new task with title: {}", task.getTitle());
