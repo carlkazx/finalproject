@@ -23,15 +23,16 @@ public class TaskDto {
 
     private String description;
 
-    public LocalDateTime getDuedate() {
-        return duedate;
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
-    public void setDuedate(LocalDateTime duedate) {
-        this.duedate = duedate;
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
     }
 
-    private LocalDateTime duedate;
+    private LocalDateTime dueDate;
 
 
     public Integer getAssignedUserId() {
