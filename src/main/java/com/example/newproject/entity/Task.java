@@ -29,6 +29,7 @@ public class Task {
     @Getter
     private LocalDateTime dueDate;
 
+
     @Setter
     @Getter
     private String title;
@@ -54,6 +55,10 @@ public class Task {
     private boolean isApproved = false;
 
     @Setter @Getter
+    private String status;
+
+
+    @Setter @Getter
     private String name; // Corresponds to the 'Name' column in Google Sheets
 
     @Setter @Getter
@@ -62,12 +67,25 @@ public class Task {
     @Setter @Getter
     private String details; // Corresponds to the 'Details' column in Google Sheets
 
+    @Setter @Getter
+    private String timestamp; // Corresponds to the 'Details' column in Google Sheets
+    public void updateFromOtherTask(Task other) {
+        this.setTitle(other.getTitle());
+        this.setDescription(other.getDescription());
+        this.setDueDate(other.getDueDate());
+        this.setTicketId(other.getTicketId());
+        this.setName(other.getName());
+        this.setStaffId(other.getStaffId());
+        // Update other properties as necessary
+    }
 
     @Setter
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assigned_user_id")
     private User assignedTo;
+
+
 
     // Constructors, getters and setters
 }

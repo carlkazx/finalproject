@@ -39,12 +39,10 @@ public class SecurityConfiguration {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/auth/login", "/auth/signup").permitAll() // Public endpoints
                         .requestMatchers(HttpMethod.POST, "/api/overtime/approve/*",
-                                "/api/tasks/approve/*",
                                 "/api/tasks/assign",
                                 "/api/tasks/revert/*",
                                 "api/tasks/").hasRole("ADMIN") // Only ADMIN can access these
                         .requestMatchers(HttpMethod.POST, "/admins").hasRole("SUPER_ADMIN") // Only SUPER_ADMIN can access this
-                        .requestMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN", "SUPER_ADMIN") // Both ADMIN and SUPER_ADMIN can access this
                         .requestMatchers(HttpMethod.POST,
                                 "/api/overtime/overtime-request",
                                 "/api/tasks/requestApproval/",

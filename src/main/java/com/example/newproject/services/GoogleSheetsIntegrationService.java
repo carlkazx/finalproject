@@ -62,7 +62,7 @@ public class GoogleSheetsIntegrationService {
                 .build();
     }
 
-    @Scheduled(fixedRate = 60000) // 1 minute interval
+    @Scheduled(fixedRate = 30000) // 1 minute interval
     public void scheduledFetchFromGoogleSheets() {
         String spreadsheetId = "1Qk1ABikf0EedJGdjgcZtu-FtDfPAbu3QVNdjg1EtEnA"; // Replace with your actual spreadsheet ID
         String range = "'Form Responses 4'!A2:E"; // Replace with your actual range
@@ -90,14 +90,16 @@ public class GoogleSheetsIntegrationService {
                     // Check if the ticket number already exists in the database
                     if (!taskService.existsByTicketId(ticketId)) {
                         // Make sure you have enough columns for name, staffId, and details
-                        if (row.size() >= 4) {
+                        if (row.size() >= 5) {
+                            String timestamp = row.size() > 0 ? (String) row.get(0) : null; // Replace index if different
                             String name = row.size() > 2 ? (String) row.get(2) : null; // Replace index if different
                             String staffId = row.size() > 3 ? (String) row.get(3) : null; // Replace index if different
                             String details = row.size() > 4 ? (String) row.get(4) : null; // Replace index if different
+
                             // Log the information for debugging
-                            logger.debug("Processing row: Ticket ID - {}, Name - {}, Staff ID - {}, Details - {}", ticketId, name, staffId, details);
+                            logger.debug("Processing row: Ticket ID - {}, Name - {}, Staff ID - {}, Details - {}, Timestamp- {}", ticketId, name, staffId, details, timestamp);
                             // Call the service to create a task entity and save it to the database
-                            taskService.createTaskFromGoogleSheet(ticketId, name, staffId, details);
+                            taskService.createTaskFromGoogleSheet(ticketId, name, staffId, details, timestamp);
                         } else {
                             logger.warn("Insufficient data in row: {}", row);
                         }
