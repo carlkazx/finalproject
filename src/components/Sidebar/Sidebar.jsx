@@ -1,5 +1,5 @@
-
-import { FaTachometerAlt, FaTasks, FaWrench, FaStickyNote, FaRegChartBar, FaRegCalendarAlt, FaChevronRight, FaChevronLeft, FaBolt } from "react-icons/fa";
+import { IoTimer } from "react-icons/io5";
+import { FaTachometerAlt, FaTasks, FaStickyNote, FaRegChartBar, FaRegCalendarAlt, FaChevronRight, FaChevronLeft, FaBolt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 const Sidebar = () => {
     return (
@@ -29,8 +29,8 @@ const Sidebar = () => {
                     </Link> {/* Close Link tag here */}
                     <div className='flex items-center justify-between gap-[10px] py-[15px] cursor-pointer'>
                         <div className='flex items-center gap-[10px]'>
-                            <FaWrench color='white'/> <p
-                            className='text-[14px] leading-[20px] font-normal text-white'>Utilities</p>
+                            <IoTimer color='white'/> <p
+                            className='text-[14px] leading-[20px] font-normal text-white'>Overtime</p>
                         </div>
                         <FaChevronRight color='white'/>
                     </div>
