@@ -52,6 +52,11 @@ const TaskDetails = () => {
         fetchUsers();
     }, [taskId]);
 
+    useEffect(() => {
+        // Initialize selectedUserId when component mounts or taskId changes
+        setSelectedUserId(task.assignedTo);
+    }, [task.assignedTo, taskId]);
+
     const assignUser = async (userId) => {
         try {
             const response = await axios.post(`http://localhost:8005/api/tasks/${taskId}/assign`, {
@@ -65,13 +70,14 @@ const TaskDetails = () => {
         }
     };
 
-    const [assignedUserId, setAssignedUserId] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(task.assignedTo);
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'assignedTo') {
-            setAssignedUserId(value); // Store the selected user ID
+            setSelectedUserId(value); // Store the selected user ID
         } else if (name === 'dueDate' || name === 'dueTime') {
             setTask({ ...task, [name]: value });
         } else {
@@ -99,40 +105,39 @@ const TaskDetails = () => {
 
     const handleUpdate = async () => {
         const date = new Date(task.dueDate);
-        const time = task.dueTime;
+        const time = task.dueTime || "00:00"; // Fallback to "00:00" if dueTime is undefined
 
         if (!isNaN(date)) {
-            date.setHours(parseInt(time.split(':')[0], 10));
-            date.setMinutes(parseInt(time.split(':')[1], 10));
-            date.setSeconds(0);
-            date.setMilliseconds(0);
+            const [hours, minutes] = time.split(':').map(str => parseInt(str, 10));
+            date.setHours(hours, minutes, 0, 0);
 
-            const formattedDateTime = date.toISOString();
+            const localTimeOffset = date.getTimezoneOffset() * 60000;
+            const localDateTime = new Date(date.getTime() - localTimeOffset);
+            const formattedDateTime = localDateTime.toISOString();
 
             const updatedTask = {
                 ...task,
                 dueDate: formattedDateTime,
+                assignedTo: selectedUserId,
             };
 
             try {
-                // Update task details
                 const response = await axios.put(`http://localhost:8005/api/tasks/${taskId}`, updatedTask);
                 console.log('Task updated successfully', response.data);
 
-                // Assign user if a new user was selected
-                if (assignedUserId) {
-                    await assignUser(assignedUserId);
+                if (selectedUserId) {
+                    await assignUser(selectedUserId);
                 }
 
-                navigate('/tasks'); // Adjust the route as needed
+                navigate('/tasks');
             } catch (error) {
                 console.error('Error updating task:', error);
             }
         } else {
             console.error('Invalid date format');
         }
-
     };
+
 
 
     if (!task) return <p>Loading...</p>;
@@ -161,13 +166,14 @@ const TaskDetails = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Assigned To Dropdown */}
-                <Dropdown label={users.find(user => user.id === task.assignedTo)?.fullName || "Assigned To"}>
+                <Dropdown label={users.find(user => user.id === selectedUserId)?.fullName || "Assigned To"}>
                     {users.map(user => (
-                        <Dropdown.Item key={user.id} onClick={() => setTask({ ...task, assignedTo: user.id })}>
+                        <Dropdown.Item key={user.id} onClick={() => setSelectedUserId(user.id)}>
                             {user.fullName}
                         </Dropdown.Item>
                     ))}
                 </Dropdown>
+
 
                 {/* Status Dropdown */}
                 <Dropdown label={task.status || "Status"}>
