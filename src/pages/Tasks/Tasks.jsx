@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const Tickets = () => {
     const [rows, setRows] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10); // Adjust the number of items per page if needed
     const navigate = useNavigate();
 
     const formatDate = (dateString) => {
@@ -31,35 +34,31 @@ const Tickets = () => {
         return isNaN(date.getTime()) ? "Invalid Date" : date.toLocaleString();
     };
 
-
     const fetchData = async () => {
         console.log('Fetching tasks...');
         try {
             const response = await axios.get('http://localhost:8005/api/tasks');
-            console.log('Tasks data:', response.data);
             setRows(response.data.map(task => ({
                 ...task,
                 created: formatDate(task.timestamp),
-                dueDate: formatISODate(task.dueDate) // Use the separate function for dueDate
+                dueDate: formatISODate(task.dueDate)
             })));
-            console.log('Tasks fetched successfully:', response.data);
         } catch (error) {
             console.error('There was an error fetching the tasks:', error);
         }
     };
 
-
     useEffect(() => {
         fetchData();
-        const intervalId = setInterval(() => {
-            fetchData();
-        }, 30000); // Refresh every 30 seconds
-
-        return () => {
-            console.log('Clearing tasks fetch interval');
-            clearInterval(intervalId);
-        };
+        const intervalId = setInterval(fetchData, 30000); // Refresh every 30 seconds
+        return () => clearInterval(intervalId); // Cleanup interval on unmount
     }, []);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     const tableCellStyle = "p-4 border-b border-gray-200 text-gray-600";
     const tableHeaderStyle = "p-4 text-gray-600 font-bold";
@@ -80,7 +79,7 @@ const Tickets = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {rows.map((row, index) => (
+                    {currentItems.map((row, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-50 cursor-pointer" onClick={() => navigate(`/task/${row.id}`)}>
                             <td className={tableCellStyle}>{row.ticketId}</td>
                             <td className={tableCellStyle}>{row.description}</td>
@@ -108,6 +107,19 @@ const Tickets = () => {
                     ))}
                     </tbody>
                 </table>
+            </div>
+            <div className="flex justify-center mt-4">
+                <nav>
+                    <ul className="flex list-none">
+                        {Array.from({ length: Math.ceil(rows.length / itemsPerPage) }, (_, i) => (
+                            <li key={i} className="mx-1">
+                                <button onClick={() => paginate(i + 1)} className={`px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-gray-300' : ''}`}>
+                                    {i + 1}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </div>
         </div>
     );
