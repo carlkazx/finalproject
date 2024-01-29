@@ -1,22 +1,45 @@
 import { IoTimer } from "react-icons/io5";
-import { FaTachometerAlt, FaTasks, FaStickyNote, FaRegChartBar, FaRegCalendarAlt, FaChevronRight, FaChevronLeft, FaBolt } from "react-icons/fa";
+import {
+    FaTachometerAlt,
+    FaTasks,
+    FaStickyNote,
+    FaRegChartBar,
+    FaRegCalendarAlt,
+    FaChevronRight,
+    FaChevronLeft,
+    FaBolt,
+    FaChevronDown, FaChevronUp
+} from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import {useState} from "react";
 const Sidebar = () => {
+
+    const [isOvertimeExpanded, setOvertimeExpanded] = useState(false);
+
+    const toggleOvertime = () => {
+        setOvertimeExpanded(!isOvertimeExpanded);
+    };
+
+
     return (
         <div className="">
+
             <div className='bg-[#4E73DF] px-[25px] h-screen'>
                 <div
                     className='px-[15px] py-[30px] flex items-center justify-center border-b-[1px] border-[#EDEDED]/[0.3]'>
                     <h1 className='text-white text-[20px] leading-[24px] font-extrabold cursor-pointer'>Admin Panel</h1>
                 </div>
-                <div
-                    className='flex items-center gap-[15px] py-[20px] border-b-[1px] border-[#EDEDED]/[0.3] cursor-pointer'>
-                    <FaTachometerAlt color='white'/>
-                    <p className='text-[14px] leading-[20px] font-bold text-white'>Dashboard</p>
-                </div>
+
+                <Link to="/" className='text-decoration-none'> {/* Update this line to link to the Dashboard */}
+                    <div className='flex items-center gap-[15px] py-[20px] border-b-[1px] border-[#EDEDED]/[0.3] cursor-pointer'>
+                        <FaTachometerAlt color='white'/>
+                        <p className='text-[14px] leading-[20px] font-bold text-white'>Dashboard</p>
+                    </div>
+                </Link> {/* Close Link tag here */}
 
                 <div className='pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]'>
                     <p className='text-[10px] font-extrabold leading-[16px] text-white/[0.4]'> INTERFACE</p>
+
                     {/* Tasks Link */}
                     <Link to="/tasks" className='text-decoration-none'> {/* Add this line */}
                         <div className='flex items-center justify-between gap-[10px] py-[15px] cursor-pointer'>
@@ -27,14 +50,30 @@ const Sidebar = () => {
                             <FaChevronRight color='white'/>
                         </div>
                     </Link> {/* Close Link tag here */}
-                    <div className='flex items-center justify-between gap-[10px] py-[15px] cursor-pointer'>
-                        <div className='flex items-center gap-[10px]'>
-                            <IoTimer color='white'/> <p
-                            className='text-[14px] leading-[20px] font-normal text-white'>Overtime</p>
+
+                    <div className='pt-[2px] border-b-[1px] border-[#EDEDED]/[0.3]'>
+                        <div onClick={toggleOvertime}
+                             className='flex items-center justify-between gap-[10px] py-[15px] cursor-pointer'>
+                            <div className='flex items-center gap-[10px]'>
+                                <IoTimer color='white'/>
+                                <p className='text-[14px] leading-[20px] font-normal text-white'>Overtime</p>
+                            </div>
+                            {isOvertimeExpanded ? <FaChevronUp color='white'/> : <FaChevronDown color='white'/>}
                         </div>
-                        <FaChevronRight color='white'/>
+                        {isOvertimeExpanded && (
+                            <div className="flex flex-col pl-[40px] pb-[15px]">
+                                <Link to="/overtime-requests"
+                                      className='py-[5px] text-white text-decoration-none hover:text-gray-300'>Overtime
+                                    Requests</Link>
+                                <Link to="/request-form"
+                                      className='py-[5px] text-white text-decoration-none hover:text-gray-300'>Request
+                                    Form</Link>
+                            </div>
+                        )}
                     </div>
+
                 </div>
+
                 <div className='pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]'>
                     <p className='text-[10px] font-extrabold leading-[16px] text-white/[0.4]'> ADDONS</p>
                     <div className='flex items-center justify-between gap-[10px] py-[15px] cursor-pointer'>
@@ -44,24 +83,28 @@ const Sidebar = () => {
                         </div>
                         <FaChevronRight color='white'/>
                     </div>
+
                     <div className='flex items-center gap-[10px] py-[15px]  cursor-pointer'>
                         <FaRegChartBar color='white'/> <p
                         className='text-[14px] leading-[20px] font-normal text-white'>Charts</p>
                     </div>
+
                     <div className='flex items-center gap-[10px] py-[15px] cursor-pointer'>
                         <FaRegCalendarAlt color='white'/> <p
                         className='text-[14px] leading-[20px] font-normal text-white'>Tables</p>
                     </div>
+
                 </div>
+
                 <div className='pt-[15px]'>
                     <div className='flex items-center justify-center'>
-
                         <div
                             className='h-[40px] w-[40px] bg-[#3C5EC1] rounded-full flex items-center justify-center cursor-pointer'>
                             <FaChevronLeft color='white'/>
                         </div>
                     </div>
                 </div>
+
                 <div
                     className='bg-[#395CBF] mt-[15px] flex items-center justify-center flex-col py-[15px] px-[10px] gap-[15px] rounded-[3px]'>
                     <FaBolt color='white'/>
@@ -73,7 +116,9 @@ const Sidebar = () => {
                         to Pro!
                     </button>
                 </div>
+
             </div>
+
         </div>
 
     )
