@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 @RequestMapping("/auth")
 @RestController
 @CrossOrigin
@@ -22,22 +23,27 @@ public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
-    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
     public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
     }
 
+
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+    public ResponseEntity<?> register(@RequestBody RegisterUserDto registerUserDto) {
+        logger.info("Received signup data: {}", registerUserDto);
 
-        return ResponseEntity.ok(registeredUser);
+        try {
+            User registeredUser = authenticationService.signup(registerUserDto);
+            logger.info("User registered successfully: {}", registeredUser.getUsername());
+            return ResponseEntity.ok(registeredUser);
+        } catch (Exception e) {
+            logger.error("Signup failed for user: {}, error: {}", registerUserDto.getEmail(), e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed: " + e.getMessage());
+        }
     }
-
-
-    // ... imports and class definition
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {

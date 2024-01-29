@@ -47,6 +47,7 @@ public class UserService {
                 .setPassword(passwordEncoder.encode(input.getPassword()))
                 .setRole(optionalRole.get());
 
+
         return userRepository.save(user);
     }
 

@@ -1,61 +1,24 @@
 package com.example.newproject.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 public class TaskDto {
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     private String title;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     private String description;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     private String status;
 
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
-
     private LocalDateTime dueDate;
 
 
-    public Integer getAssignedUserId() {
-        return assignedUserId;
-    }
-
-    public void setAssignedUserId(Integer assignedUserId) {
-        this.assignedUserId = assignedUserId;
-    }
-
     private Integer assignedUserId;
 
-
-
-    // Getters and setters...
 }

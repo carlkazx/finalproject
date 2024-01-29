@@ -20,7 +20,10 @@ import java.util.Set;
 
 @Table(name = "users")
 @Entity
+@Setter
+@Getter
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -31,6 +34,48 @@ public class User implements UserDetails {
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
+
+    private String phoneNumber;
+
+    private String city;
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public User setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    @Column(name = "address")
+    private String address;
+
+
+    public String getIc() {
+        return ic;
+    }
+
+    public void setIc(String ic) {
+        this.ic = ic;
+    }
+
+    @Column(name = "ic")
+    private String ic;
+
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    @Column(name = "postcode")
+    private String postcode;
+
 
     @Column(nullable = false)
     private String password;
@@ -92,6 +137,8 @@ public class User implements UserDetails {
         return this;
     }
 
+
+
     public String getFullName() {
         return fullName;
     }
@@ -100,6 +147,8 @@ public class User implements UserDetails {
         this.fullName = fullName;
         return this;
     }
+
+
 
     public String getEmail() {
         return email;

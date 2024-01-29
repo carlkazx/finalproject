@@ -43,14 +43,22 @@ public class AuthenticationService {
             return null;
         }
 
-        var user = new User()
-                .setFullName(input.getFullName())
-                .setEmail(input.getEmail())
-                .setPassword(passwordEncoder.encode(input.getPassword()))
-                .setRole(optionalRole.get());
+        User user = new User();
+        user.setFullName(input.getFullName());
+        user.setEmail(input.getEmail());
+        user.setAddress(input.getAddress()); // Set the address
+        user.setIc(input.getIc());           // Set the IC
+        user.setPostcode(input.getPostcode()); // Set the postcode
+        user.setCity(input.getCity());
+        user.setPhoneNumber(input.getPhoneNumber());
+        user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setRole(optionalRole.get());
 
         return userRepository.save(user);
     }
+
+
+
 
     public User authenticate(LoginUserDto input) {
         authenticationManager.authenticate(

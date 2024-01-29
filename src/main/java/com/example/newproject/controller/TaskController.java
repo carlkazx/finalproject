@@ -37,7 +37,7 @@ public class TaskController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<Task>>  getAllTasks() {
         logger.info("Getting all tasks");
         List<Task> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
@@ -58,26 +58,39 @@ public class TaskController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
-        Optional<Task> existingTaskOptional = taskService.findById(id);
+    public ResponseEntity<?> updateTask(@PathVariable String id, @RequestBody TaskDto taskDto) {
+        // Convert the id to a Long if needed
+        Long taskId;
+        try {
+            taskId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            return ResponseEntity.badRequest().body("Invalid task ID format");
+        }
+
+        Optional<Task> existingTaskOptional = taskService.findById(taskId);
 
         if (!existingTaskOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
         Task existingTask = existingTaskOptional.get();
+        logger.info("Status before setting: {}", taskDto.getStatus());
 
         // Map fields from the DTO to the existing task entity
         existingTask.setTitle(taskDto.getTitle());
         existingTask.setDescription(taskDto.getDescription());
         existingTask.setDueDate(taskDto.getDueDate());
         existingTask.setStatus(taskDto.getStatus());
+
+        logger.info("Status after setting: {}", taskDto.getStatus());
+
         // ... other property mappings ...
 
         // Save the updated task
         Task updatedTask = taskService.saveOrUpdateTask(existingTask);
         return ResponseEntity.ok(updatedTask);
     }
+
 
 
     @PostMapping

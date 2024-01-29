@@ -1,21 +1,24 @@
 package com.example.newproject.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RegisterUserDto {
     private String email;
     private String password;
     private String fullName;
+    private String ic;
+    private String address;
+    private String city;
+    private String postcode;
+    private String phoneNumber;
 
-    public String getEmail() {
-        return email;
-    }
 
     public RegisterUserDto setEmail(String email) {
         this.email = email;
         return this;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public RegisterUserDto setPassword(String password) {
@@ -23,14 +26,16 @@ public class RegisterUserDto {
         return this;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
     public RegisterUserDto setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
+
+    public RegisterUserDto setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
 
     @Override
     public String toString() {
@@ -38,6 +43,9 @@ public class RegisterUserDto {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
+                ", ic " + ic + '\'' +
+                ", address='" + address + '\'' +
+                ", postcode='" + postcode + '\'' +
                 '}';
     }
 }

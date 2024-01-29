@@ -76,6 +76,7 @@ public class Task {
         this.setTicketId(other.getTicketId());
         this.setName(other.getName());
         this.setStaffId(other.getStaffId());
+        this.setStatus(other.getStatus());
         // Update other properties as necessary
     }
 
